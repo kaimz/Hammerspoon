@@ -1,67 +1,26 @@
--- -----------------------------------------------------------------------
---           ** HammerSpoon Config File by S1ngS1ng with ❤️ **           --
--- -----------------------------------------------------------------------
-
---   ***   Please refer to README.MD for instructions. Cheers!    ***   --
-
--- -----------------------------------------------------------------------
---                         ** Something Global **                       --
--- -----------------------------------------------------------------------
--- Uncomment this following line if you don't wish to see animations
--- hs.window.animationDuration = 0
-
--- -----------------------------------------------------------------------
---                            ** Requires **                            --
--- -----------------------------------------------------------------------
-require ("window-management")
-require ("vim-binding")
-require ("key-binding")
-
-fw = hs.window.focusedWindow
-hs.application.enableSpotlightForNameSearches(true)
--- -----------------------------------------------------------------------
---                            ** For Debug **                           --
--- -----------------------------------------------------------------------
-function reloadConfig(files)
-  local doReload = false
-  for _,file in pairs(files) do
-    if file:sub(-4) == ".lua" then
-      doReload = true
-    end
-  end
-  if doReload then
-    hs.reload()
-    hs.alert.show('Config Reloaded')
-  end
-end
-hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
-
--- Well, sometimes auto-reload is not working, you know u.u
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "r", function()
-  hs.reload()
-end)
-hs.alert.show("Config loaded")
-
 --
 -- zk@20191212
 --
 appmod = {"cmd", "ctrl"}
-applist = {
-    {shortcut = 'c', appname = 'Google Chrome'},
-    {shortcut = 'f', appname = 'Finder'},
-    {shortcut = 'j', appname = 'IntelliJ IDEA'},
-    {shortcut = 't', appname = 'iTerm2'},
-    {shortcut = 'w', appname = 'WeChat'},
-    {shortcut = 'x', appname = 'WeChat'},
-    {shortcut = 'q', appname = 'QQ'},
-    {shortcut = 's', appname = 'System Preferences'},
-    {shortcut = 'p', appname = 'Activity Monitor'},
-}
-
 
 hs.fnutils.each(applist, function(item)
     hs.hotkey.bind(appmod, item.shortcut, item.appname, function() activateApp(item.appname) end)
 end)
+
+applist = {
+    {shortcut = 'c', appname = 'Google Chrome'},
+    {shortcut = 'e', appname = 'Microsoft Excel'},
+    {shortcut = 'f', appname = 'Finder'},
+    {shortcut = 'i', appname = 'Amazon Chime'},
+    {shortcut = 'j', appname = 'IntelliJ IDEA'},
+    {shortcut = 'm', appname = 'NeteaseMusic'},
+    {shortcut = 'o', appname = 'Microsoft Outlook'},
+    {shortcut = 'p', appname = 'Microsoft PowerPoint'},
+    {shortcut = 'r', appname = 'Firefox'},
+    {shortcut = 't', appname = 'iTerm2'},
+    {shortcut = 'w', appname = 'Microsoft Word'},
+    {shortcut = 'x', appname = 'WeChat'},
+}
 
 function activateApp(appname)
     launchOrCycleFocus(appname)()
@@ -119,7 +78,7 @@ function launchOrCycleFocus(applicationName)
   end
 end
 
-function getNextWindow(windows, window)
+local function getNextWindow(windows, window)
   if type(windows) == "string" then
     windows = hs.application.find(windows):allWindows()
   end
@@ -156,16 +115,3 @@ local function getNextIndex(table, currentIndex)
 
   return nextIndex
 end
-
-function highlightActiveWin()
-    if fw() then
-        local rect = hs.drawing.rectangle(fw():frame())
-        rect:setStrokeColor({["red"]=1,  ["blue"]=0, ["green"]=1, ["alpha"]=1})
-        rect:setStrokeWidth(5)
-        rect:setFill(false)
-        rect:show()
-        hs.timer.doAfter(0.3, function() rect:delete() end)
-    end
-end
-
-globalGC = hs.timer.doEvery(180, collectgarbage)

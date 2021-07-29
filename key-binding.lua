@@ -43,7 +43,9 @@ windowBind({"ctrl", "alt", "cmd"}, {
   left = wm.leftHalf,       -- ⌃⌥⌘ + ←
   right = wm.rightHalf,     -- ⌃⌥⌘ + →
   up = wm.topHalf,          -- ⌃⌥⌘ + ↑
-  down = wm.bottomHalf      -- ⌃⌥⌘ + ↓
+  down = wm.bottomHalf,      -- ⌃⌥⌘ + ↓
+  b = previousWindow,    --⌃⌥⌘ +b
+  n = nextWindow   --⌃⌥⌘ +n
 })
 -- * Set Window Position on screen
 windowBind({"ctrl", "alt", "shift"}, {

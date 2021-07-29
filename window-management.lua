@@ -141,12 +141,12 @@ end
 
 module.throwLeft = function ()
   local this = windowMeta.new()
-  this.window:moveOneScreenWest()
+  this.window:moveOneScreenWest(false, true ,0)
 end
 
 module.throwRight = function ()
   local this = windowMeta.new()
-  this.window:moveOneScreenEast()
+  this.window:moveOneScreenEast(false, true, 0)
 end
 
 module.leftHalf = function ()
@@ -304,12 +304,23 @@ function focusScreen(screen)
   mouse.setAbsolutePosition(pt)
 end
 
+--  鼠标切换到下一个窗口
 module.moveCursorPreviousMonitor = function ()
     focusScreen(window.focusedWindow():screen():previous())
 end
-
+-- 鼠标切换到前一个窗口
 module.moveCursorNextMonitor = function ()
     focusScreen(window.focusedWindow():screen():next())
+end
+-- 界面切换到
+module.nextWindow = function ()
+    local this = windowMeta.new()
+    this.window.switcher:nextWindow(this.window)
+end
+
+module.previousWindow = function ()
+    local this = windowMeta.new()
+    this.window.switcher:previousWindow(this.window)
 end
 
 module.keyHints = function ()

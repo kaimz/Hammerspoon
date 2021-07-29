@@ -2,7 +2,7 @@
 
 local module = {}
 
-module.debugging = false -- whether to print status updates
+module.debugging = true -- whether to print status updates
 
 local eventtap = require "hs.eventtap"
 local event    = eventtap.event
